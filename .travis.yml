@@ -1,0 +1,13 @@
+# We tell Travis that we need super user access
+sudo: required
+# We tell Travis to install docker
+services:
+  - docker
+
+# Commands that need to be executed before we run the tests
+before_install:
+  # build the container and tag it so we can refer to it later
+  - docker build -t test_container -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true test_container npm run test -- --coverage

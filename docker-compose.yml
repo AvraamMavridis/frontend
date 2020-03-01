@@ -1,0 +1,23 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      # export container port to host
+      - '3000:3000'
+    volumes:
+      # do not map the node modules of the container
+      - /app/node_modules 
+      # treat the current directory as a container directory
+      - .:/app 
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules 
+      - .:/app 
+    # override the default command specified in Dockerfile.dev
+    command: ['npm', 'run', 'test']
