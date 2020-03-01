@@ -11,3 +11,12 @@ before_install:
 
 script:
   - docker run -e CI=true test_container npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "frontend"
+  env: "Frontend-env"
+  bucket_name: "elasticbeanstalk-us-east-2-601430843364"
+  on:
+    branch: master
